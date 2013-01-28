@@ -7,16 +7,16 @@ namespace MainMemorySimulator
 {
     public class Job
     {
-        public string Name {get; set;}
+        public int Number {get; set;}
         public int Time { get; set; }
         public int TimeLeft { get; set; }
         public int MemorySpace { get; set; }
         public bool IsEmpty { get; set; }
         public bool WasAllocated { get; set; }
 
-        public Job(string name, int time, int space)
+        public Job(int number, int time, int space)
         {
-            Name = name;
+            Number = number;
             Time = time;
             this.TimeLeft = time;
             MemorySpace = space;
@@ -24,9 +24,9 @@ namespace MainMemorySimulator
             WasAllocated = false;
         }
 
-        public Job(string name, int time, int space, bool isEmpty)
+        public Job(int number, int time, int space, bool isEmpty)
         {
-            Name = name;
+            Number = number;
             Time = time;
             this.TimeLeft = time;
             MemorySpace = space;

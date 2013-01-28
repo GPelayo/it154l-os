@@ -23,7 +23,7 @@ namespace MainMemorySimulator
 
         public void Dump(int size)
         {
-            this.CurrentJob = new Job("Empty", 100, size, true);
+            this.CurrentJob = new Job(int.MaxValue, -1, size, true);
         }
 
         public void ResetJob()

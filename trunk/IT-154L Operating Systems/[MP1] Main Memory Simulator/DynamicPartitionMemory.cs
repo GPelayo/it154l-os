@@ -217,7 +217,7 @@ namespace MainMemorySimulator
 
                     if (leftoverSpace > 0)
                     {
-                        Partition newEmptyPartition = new Partition(new Job("Empty", 100, leftoverSpace, true));
+                        Partition newEmptyPartition = new Partition(new Job(int.MaxValue, 100, leftoverSpace, true));
                         newEmptyPartition.NextPartition = readPartition.NextPartition;
                         readPartition.NextPartition = newEmptyPartition;
 
