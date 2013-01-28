@@ -33,7 +33,7 @@ namespace MainMemorySimulator
         }
 
         public bool IsBestFit { get; set; }
-        public ScehdulerType SchedulingType { get; set; }
+        public bool IsFJFS { get; set; }
         public abstract Job[] JobQueue { get; }
         public abstract void Update();
         public abstract bool IsFinished  { get; }
@@ -61,14 +61,7 @@ namespace MainMemorySimulator
 
         protected int CompareJobName(Job firstJob, Job secondJob)
         {
-            try
-            {
-                return int.Parse(firstJob.Name) - int.Parse(secondJob.Name);
-            }
-            catch (FormatException)
-            {
-                return firstJob.Name.CompareTo(secondJob.Name);
-            }
+            return firstJob.Number - secondJob.Number;
         }
 
         protected int CompareJobTime(Job firstJob, Job secondJob)
@@ -85,14 +78,13 @@ namespace MainMemorySimulator
                 runningQueue.Add(iPartition.CurrentJob);
             }
 
-            switch (this.SchedulingType)
-            {
-                case ScehdulerType.FIFO:
-                    runningQueue.Sort(CompareJobName);
-                    break;
-                case ScehdulerType.FJFO:
+            if(IsFJFS)
+            {                
                     runningQueue.Sort(CompareJobTime);
-                    break;
+            }
+            else
+            {
+                    runningQueue.Sort(CompareJobName);
             }
         }
     }

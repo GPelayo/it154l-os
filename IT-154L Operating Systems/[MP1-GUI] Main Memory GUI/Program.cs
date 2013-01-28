@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CPU_Scheduling_Simulator
+namespace WindowsFormsApplication4
 {
     static class Program
     {
@@ -15,7 +15,7 @@ namespace CPU_Scheduling_Simulator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DebugForm());
+            Application.Run(new Form1());
         }
     }
 }

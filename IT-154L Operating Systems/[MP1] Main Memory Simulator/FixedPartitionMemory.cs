@@ -35,10 +35,10 @@ namespace MainMemorySimulator
         }
         public override Partition[] MemoryBlocks { get { return memoryBlocks.ToArray(); } }
 
-        public FixedPartitionMemory(List<Partition> memoryBlocks, List<Job> jobQueue, bool isBestFit, ScehdulerType SchedulingType)
+        public FixedPartitionMemory(List<Partition> memoryBlocks, List<Job> jobQueue, bool isBestFit, bool isFJCS)
         {
             IsBestFit = isBestFit;
-            this.SchedulingType = SchedulingType;
+            this.IsFJFS = isFJCS;
             this.memoryBlocks = memoryBlocks;         
             this.allocationQueue = jobQueue;
             Comparison<Job> jobComparison;
@@ -49,7 +49,6 @@ namespace MainMemorySimulator
                 allocationQueue.Sort(jobComparison);
             }
 
-            Allocate();
             UpdateRunningQueue();
         }
 

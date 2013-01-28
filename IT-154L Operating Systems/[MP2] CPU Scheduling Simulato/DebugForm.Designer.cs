@@ -1,6 +1,6 @@
 ﻿namespace CPU_Scheduling_Simulator
 {
-    partial class Form1
+    partial class DebugForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,32 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lblDisplay = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // listBox1
+            // lblDisplay
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
-            this.listBox1.TabIndex = 0;
+            this.lblDisplay.AutoSize = true;
+            this.lblDisplay.Location = new System.Drawing.Point(12, 9);
+            this.lblDisplay.Name = "lblDisplay";
+            this.lblDisplay.Size = new System.Drawing.Size(51, 13);
+            this.lblDisplay.TabIndex = 0;
+            this.lblDisplay.Text = "lblDisplay";
             // 
-            // Form1
+            // DebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.listBox1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(174, 66);
+            this.Controls.Add(this.lblDisplay);
+            this.Name = "DebugForm";
+            this.Text = "Debug";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label lblDisplay;
+
     }
 }
 

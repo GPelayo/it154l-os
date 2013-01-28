@@ -28,7 +28,7 @@ namespace MainMemorySimulator
 
         public void Dump()
         {
-            this.CurrentJob = new Job("Empty", 100, MemoryCapacity, true);
+            this.CurrentJob = new Job(int.MaxValue, -1, MemoryCapacity, true);
         }
     }
 }

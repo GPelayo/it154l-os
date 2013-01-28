@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace CPU_Scheduling_Simulator
 {
-    public partial class Form1 : Form
+    public partial class DebugForm : Form
     {
-        public Form1()
+        public DebugForm()
         {
             InitializeComponent();
         }
