@@ -31,5 +31,7 @@ namespace MainMemorySimulator
             this.CurrentJob.TimeLeft = this.CurrentJob.Time;
             this.CurrentJob.WasAllocated = false;
         }
+
+
     }
 }
