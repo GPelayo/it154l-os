@@ -15,7 +15,7 @@ namespace CPU_Scheduling_Simulator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DebugForm());
+            Application.Run(new MainForm());
         }
     }
 }

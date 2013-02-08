@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CPU_Scheduling_Simulator</RootNamespace>
     <AssemblyName>CPU Scheduling Simulator</AssemblyName>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -47,17 +48,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CPU.cs" />
+    <Compile Include="CustomDataEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomDataEntryForm.designer.cs">
+      <DependentUpon>CustomDataEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DebugForm.Designer.cs">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CustomDataEntryForm.resx">
+      <DependentUpon>CustomDataEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -67,6 +86,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
