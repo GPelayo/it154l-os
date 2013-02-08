@@ -21,15 +21,15 @@ namespace CPU_Scheduling_Simulator
 
         private int timeFinished;
         private int timeStarted;
-        private int timeElapsed;
-        private int initialCPUCycle;
         private int currentCPUCycle;
         private ProcessStatus status;
+        private bool alreadyStarted;
 
+        public int TimeElapsed { get; set; }
         public int JobNumber { get; set; }
         public int ArrivalTime { get; set; }
         public int RoundQuotient { get; set; }
-        public int InitialCPUCycle { get { return initialCPUCycle; } }
+        public int InitialCPUCycle { get; set; }
         public int CurrentCPUCycle { get { return currentCPUCycle; } }
         public ProcessType Type { get; set; }
         public ProcessStatus Status
@@ -38,13 +38,15 @@ namespace CPU_Scheduling_Simulator
             {
                 status = value;
 
-                if (!Status.Equals(ProcessStatus.Hold))
+                if (Status.Equals(ProcessStatus.Running) && !alreadyStarted)
                 {
-                    timeStarted = timeElapsed;
+                    alreadyStarted = true;
+                    timeStarted = TimeElapsed;
                 }
-                else if (Status.Equals(ProcessStatus.Finished))
+                
+                if (Status.Equals(ProcessStatus.Finished))
                 {
-                    timeFinished = timeElapsed;
+                    timeFinished = TimeElapsed;
                 }
             }
             get
@@ -56,21 +58,21 @@ namespace CPU_Scheduling_Simulator
         {
             get
             {
-                return 0 - 0;
+                return timeFinished - ArrivalTime;
             }
         }
         public int WaitingTime
         {
             get
             {
-                return 0 - 0;
+                return TurnaroundTime - this.InitialCPUCycle;
             }
         }
         public int ResponseTime
         {
             get
             {
-                return 0 - 0;
+                return timeStarted - this.ArrivalTime;
             }
         }
 
@@ -83,23 +85,25 @@ namespace CPU_Scheduling_Simulator
 
         public Process(int jobNumber, int arrivalTime, int CPUCycle, ProcessType type)
         {
-            timeElapsed = 0;
+            alreadyStarted = false;
+            timeStarted = 0;
+            timeFinished = 0;
             currentCPUCycle = CPUCycle;
             this.JobNumber = jobNumber;
             this.ArrivalTime = arrivalTime;
-            this.initialCPUCycle = CPUCycle;
+            this.InitialCPUCycle = CPUCycle;
             this.Type = type;
             this.Status = ProcessStatus.Hold;
         }
 
-        public void Update()
+        public void Update(int currentTime)
         {
             if (Status.Equals(ProcessStatus.Running))
             {
                 currentCPUCycle--;
             }
 
-            timeElapsed++;
+            TimeElapsed = currentTime;
         }
     }
 }

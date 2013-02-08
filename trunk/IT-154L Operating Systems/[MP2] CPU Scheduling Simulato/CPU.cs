@@ -102,6 +102,8 @@ namespace CPU_Scheduling_Simulator
                         fifoSched.Add(iProcess);
                         break;
                 }
+
+                iProcess.TimeElapsed = currentCycle;
             }
 
             normalSched.Sort(CompareProcessCycle);
@@ -117,17 +119,36 @@ namespace CPU_Scheduling_Simulator
 
         public void RunNextCycle()
         {
+            if (!CheckIfFinished())
+            {
+                this.runningProcess.Update(currentCycle);
+                this.currentCycle++;
+                SetNextRunningProcess();
+            }        
+        }
 
-            this.runningProcess.Update();
-            this.currentCycle++;
-            SetNextRunningProcess();
-                        
+        public bool CheckIfFinished()
+        {
+            foreach (Process iProcess in allCPUProcesses)
+            {
+                if (!iProcess.Status.Equals(ProcessStatus.Finished))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void SetNextRunningProcess()
         {            
             bool fifoProcessFound = false, rrProcessFound = false, normalProcessFound = false;
             Process processCanidate = Process.Empty;
+
+            foreach (Process iProcess in allCPUProcesses)
+            {
+                iProcess.TimeElapsed = currentCycle;
+            }
 
             if (runningProcess.CurrentCPUCycle <= 0)
             {
