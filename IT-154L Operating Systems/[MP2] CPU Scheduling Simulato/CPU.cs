@@ -109,6 +109,17 @@ namespace CPU_Scheduling_Simulator
             normalSched.Sort(CompareProcessCycle);
         }
 
+        public void Reset()
+        {
+            currentCycle = 0;
+            this.runningProcess = Process.Empty;
+            foreach (Process iProcess in allCPUProcesses)
+            {
+                iProcess.Reset();
+            }
+            normalSched.Sort(CompareProcessCycle);
+        }
+
         public void EditProcess(int jobNumber, int CPUCycle)
         {
             if(allCPUProcesses[jobNumber].Type.Equals(ProcessType.N))
@@ -179,12 +190,15 @@ namespace CPU_Scheduling_Simulator
                 || (runningProcess.Type.Equals(ProcessType.NPR) && ((runningProcess.Status.Equals(ProcessStatus.Finished))))
                 || (runningProcess.Type.Equals(ProcessType.PR) && (runningProcess.Status.Equals(ProcessStatus.Finished) || runningProcess.Status.Equals(ProcessStatus.Waiting))))
             {
+                int shortestTime = 0;
+
                 foreach (Process iProcess in rrSched)
                 {
-                    if (iProcess.ArrivalTime <= currentCycle 
-                        && !((iProcess.Status.Equals(ProcessStatus.Finished)) || (iProcess.Status.Equals(ProcessStatus.Waiting))) 
+                    if (iProcess.ArrivalTime <= currentCycle
+                        && !((iProcess.Status.Equals(ProcessStatus.Finished)) || (iProcess.Status.Equals(ProcessStatus.Waiting)))
                         && !rrProcessFound)
                     {
+                        shortestTime = iProcess.CurrentCPUCycle;
                         processCanidate = iProcess;
                         rrProcessFound = true;
                     }
@@ -208,7 +222,7 @@ namespace CPU_Scheduling_Simulator
             {
                 if (!(runningProcess.Status.Equals(ProcessStatus.Finished) || runningProcess.Status.Equals(ProcessStatus.Waiting)))
                 {
-                    runningProcess.Status = ProcessStatus.Ready;
+                        runningProcess.Status = ProcessStatus.Ready;
                 }
                 processCanidate.Status = ProcessStatus.Running;
 

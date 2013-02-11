@@ -21,10 +21,11 @@ namespace CPU_Scheduling_Simulator
 
         private int timeFinished;
         private int timeStarted;
+        private int timeReady;
         private int currentCPUCycle;
         private ProcessStatus status;
         private bool alreadyStarted;
-
+        private bool alreadyInside;
         public int TimeElapsed { get; set; }
         public int JobNumber { get; set; }
         public int ArrivalTime { get; set; }
@@ -38,13 +39,26 @@ namespace CPU_Scheduling_Simulator
             {
                 status = value;
 
-                if (Status.Equals(ProcessStatus.Running) && !alreadyStarted)
+                if (status.Equals(ProcessStatus.Ready) && !alreadyInside)
                 {
+                    alreadyInside = true;
+                    timeReady = TimeElapsed;
+                }
+
+                if (status.Equals(ProcessStatus.Running) && !alreadyStarted)
+                {
+                    
+                    if(!alreadyInside)
+                    {
+                        alreadyInside = true;
+                        timeReady = TimeElapsed;
+                    }
+                    
                     alreadyStarted = true;
                     timeStarted = TimeElapsed;
                 }
-                
-                if (Status.Equals(ProcessStatus.Finished))
+
+                if (status.Equals(ProcessStatus.Finished))
                 {
                     timeFinished = TimeElapsed;
                 }
@@ -72,7 +86,7 @@ namespace CPU_Scheduling_Simulator
         {
             get
             {
-                return timeStarted - this.ArrivalTime;
+                return timeReady - this.ArrivalTime;
             }
         }
 
@@ -86,14 +100,25 @@ namespace CPU_Scheduling_Simulator
         public Process(int jobNumber, int arrivalTime, int CPUCycle, ProcessType type)
         {
             alreadyStarted = false;
+            alreadyInside = false;
             timeStarted = 0;
             timeFinished = 0;
-            currentCPUCycle = CPUCycle;
+            this.currentCPUCycle = CPUCycle;
             this.JobNumber = jobNumber;
             this.ArrivalTime = arrivalTime;
             this.InitialCPUCycle = CPUCycle;
             this.Type = type;
             this.Status = ProcessStatus.Hold;
+        }
+
+        public void Reset()
+        {
+            this.currentCPUCycle = this.InitialCPUCycle;
+            this.Status = ProcessStatus.Hold;
+            alreadyStarted = false;
+            alreadyInside = false;
+            timeFinished = 0;
+            timeStarted = 0;
         }
 
         public void Update(int currentTime)
