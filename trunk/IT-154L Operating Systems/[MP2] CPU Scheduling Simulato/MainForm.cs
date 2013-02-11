@@ -29,6 +29,7 @@ namespace CPU_Scheduling_Simulator
         private void InitializeCPU(int timeQuantum)
         {
             jobs = new List<Process>();
+            timelinePanels = new List<Panel>();
             jobs.Add(new Process(1, 0, 6, ProcessType.N));
             jobs.Add(new Process(2, 3, 2, ProcessType.NPR));
             jobs.Add(new Process(3, 5, 1, ProcessType.PR));
@@ -45,8 +46,7 @@ namespace CPU_Scheduling_Simulator
         }
 
         private void InitializeTable()
-        {
-            timelinePanels = new List<Panel>();
+        {          
 
             lvData.Items.Clear();
             lvTimes.Items.Clear();
@@ -107,21 +107,27 @@ namespace CPU_Scheduling_Simulator
             }
         }
 
-        private void btCustomData_Click(object sender, EventArgs e)
+        private void Reset()
         {
-            CustomDataEntryForm customData = new CustomDataEntryForm(jobs);
-            customData.ShowDialog();
+            currentCPU.Reset();
+            timelinePanels.Clear();
 
             InitializeTable();
         }
 
+        private void btCustomData_Click(object sender, EventArgs e)
+        {
+            CustomDataEntryForm customData = new CustomDataEntryForm(jobs);
+            customData.ShowDialog();
+            this.Reset();
+            
+        }
+
         private void btNext_Click(object sender, EventArgs e)
         {
-            lbCurrentTime.Text = "Current Time: " + currentCPU.CurrentCycle.ToString();
+            lbCurrentTime.Text = "Current Time: " + (currentCPU.CurrentCycle + 1).ToString();
             currentCPU.RunNextCycle();
-            
-            if(currentCPU.RunningProcess.JobNumber != lastJobNumber)
-            {
+
                 Panel iPanel = new Panel();
                 Label iLabel = new Label();
 
@@ -132,7 +138,6 @@ namespace CPU_Scheduling_Simulator
                 iPanel.Controls.Add(iLabel);
                 pnTimeline.Controls.Add(iPanel);
                 jobsRan++;
-            }
 
             InitializeTable();
             lastJobNumber = currentCPU.RunningProcess.JobNumber;
@@ -141,6 +146,8 @@ namespace CPU_Scheduling_Simulator
         private void tBoxTimeQuantum_TextChanged(object sender, EventArgs e)
         {
             InitializeCPU(Convert.ToInt32(tBoxTimeQuantum.Text));
+
+            this.Reset();
         }
     }
 }
