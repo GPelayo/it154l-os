@@ -127,7 +127,11 @@ namespace CPU_Scheduling_Simulator
         {
             CustomDataEntryForm customData = new CustomDataEntryForm(jobs);
             customData.ShowDialog();
+<<<<<<< .mine
+            this.Reset();   
+=======
             this.Reset();            
+>>>>>>> .r11
         }
 
         private void btNext_Click(object sender, EventArgs e)
