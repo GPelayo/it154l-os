@@ -11,13 +11,12 @@ namespace CPU_Scheduling_Simulator
 {
     public partial class MainForm : Form
     {
-        List<Process> jobs;
-        List<Panel> timelinePanels;
-        CPU currentCPU;
-        int i = 0;
-        int lastJobNumber = -1;
-        int jobsRan = 0;
-
+        private List<Process> jobs;
+        private List<Panel> timelinePanels;
+        private CPU currentCPU;
+        private int lastJobNumber = -1;
+        private int timelineXPos = 0;
+        private int timelineYPos = 0;
 
         public MainForm()
         {
@@ -80,8 +79,17 @@ namespace CPU_Scheduling_Simulator
 
             foreach (Process iProcess in jobs)
             {
-                String[] itemString = {iProcess.TurnaroundTime.ToString(), iProcess.WaitingTime.ToString()
-                                        , iProcess.ResponseTime.ToString()};
+                String[] itemString;
+                
+                if(iProcess.Status.Equals(ProcessStatus.Finished))
+                {
+                    itemString = new String[]{iProcess.TurnaroundTime.ToString(), iProcess.WaitingTime.ToString()
+                                            , iProcess.ResponseTime.ToString()};
+                }
+                else
+                {
+                    itemString = new String[]{"0", "0", "0"};
+                }
 
                 lvTimes.Items.Add(new ListViewItem(itemString));
 
@@ -119,8 +127,7 @@ namespace CPU_Scheduling_Simulator
         {
             CustomDataEntryForm customData = new CustomDataEntryForm(jobs);
             customData.ShowDialog();
-            this.Reset();
-            
+            this.Reset();            
         }
 
         private void btNext_Click(object sender, EventArgs e)
@@ -128,19 +135,35 @@ namespace CPU_Scheduling_Simulator
             lbCurrentTime.Text = "Current Time: " + (currentCPU.CurrentCycle + 1).ToString();
             currentCPU.RunNextCycle();
 
-                Panel iPanel = new Panel();
-                Label iLabel = new Label();
+            Panel iPanel = new Panel();
+            Label iLabel = new Label();
 
-                iLabel.Text = currentCPU.RunningProcess.JobNumber.ToString();
-                iLabel.Location = new Point(0, 0);
-                iPanel.Size = new Size(15, 15);
-                iPanel.Location = new Point(16*jobsRan, 0);
-                iPanel.Controls.Add(iLabel);
-                pnTimeline.Controls.Add(iPanel);
-                jobsRan++;
+            iLabel.Text = currentCPU.RunningProcess.JobNumber.ToString();
+            iLabel.Location = new Point(0, 0);
+            iPanel.Size = new Size(19, 15);
+            iPanel.Location = new Point(20 * timelineXPos, 25*timelineYPos);
+            iPanel.Controls.Add(iLabel);
+            iPanel.BackColor = Color.White;
 
-            InitializeTable();
-            lastJobNumber = currentCPU.RunningProcess.JobNumber;
+            this.pnTimeline.Controls.Add(iPanel);
+            this.timelineXPos++;
+
+            if (timelineXPos * 24 > this.pnTimeline.Size.Width)
+            {
+                this.timelineXPos = 0;
+                this.timelineYPos++;
+            }
+
+            this.InitializeTable();
+            this.lastJobNumber = currentCPU.RunningProcess.JobNumber;
+
+            if (currentCPU.IsFinished)
+            {
+                this.btNext.Enabled = false;
+                MessageBox.Show("Avg. Response Time:\t" + currentCPU.AvgRT + "\nAvg. TA Time:\t" 
+                            + currentCPU.AvgTA + "\nAvg. Waiting Time:\t" + currentCPU.AvgWT
+                            , "Simulation Finished!", MessageBoxButtons.OK, MessageBoxIcon.Information  );
+            }
         }
 
         private void tBoxTimeQuantum_TextChanged(object sender, EventArgs e)
