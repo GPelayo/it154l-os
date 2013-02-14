@@ -17,6 +17,21 @@ namespace CPU_Scheduling_Simulator
         public Process RunningProcess { get { return runningProcess;  } }
         public int TimeQuantum { get; set; }
         public int CurrentCycle { get { return currentCycle; } }
+        public bool IsFinished 
+        {
+            get
+            {
+                foreach (Process iProcess in allCPUProcesses)
+                {
+                    if(!iProcess.Status.Equals(ProcessStatus.Finished))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        }
         public Process[] FifoSched
         {
             get
