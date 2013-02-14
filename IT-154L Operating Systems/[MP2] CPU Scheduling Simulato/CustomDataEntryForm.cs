@@ -15,7 +15,7 @@ namespace CPU_Scheduling_Simulator
         Label[] labelJobNumber = new Label[10];
         TextBox[] textboxArrivalTime = new TextBox[10];
         TextBox[] textboxCPUCycle = new TextBox[10];
-        TextBox[] textboxType = new TextBox[10];
+        ComboBox[] textboxType = new ComboBox[10];
         List<Process> oldJobs = new List<Process>();
 
         public CustomDataEntryForm(List<Process> jobs)
@@ -43,6 +43,7 @@ namespace CPU_Scheduling_Simulator
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
                 TextBox iTxt = new TextBox();
+                iTxt.TextChanged += TextboxInput_TextChanged;
                 iTxt.Location = new Point(90, i * 20);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxArrivalTime[i] = iTxt;
@@ -59,7 +60,8 @@ namespace CPU_Scheduling_Simulator
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
                 TextBox iTxt = new TextBox();
-                iTxt.TextChanged += this.input_TextChanged;
+                //add set the [Input_TechChanged] to be [iTxt] TextChanged Event
+                iTxt.TextChanged += this.TextboxInput_TextChanged;
                 iTxt.Location = new Point(150, i * 20);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxCPUCycle[i] = iTxt;
@@ -76,7 +78,8 @@ namespace CPU_Scheduling_Simulator
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
                 ComboBox iTxt = new ComboBox();
-                iTxt.Items.AddRange(new string[] { "" }); //Add Type
+                iTxt.Items.AddRange(new string[] { "N", "PR", "NPR" }); //Add Type
+                iTxt.DropDownStyle = ComboBoxStyle.DropDownList;
                 iTxt.Location = new Point(210, i * 20);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxType[i] = iTxt;
@@ -87,7 +90,6 @@ namespace CPU_Scheduling_Simulator
             {
                 textboxType[i].Text = jobs[i].Type.ToString();
             }
-
         }
 
         private void btSubmit_Click(object sender, EventArgs e)
@@ -100,15 +102,14 @@ namespace CPU_Scheduling_Simulator
             }
 
             this.Close();
-        }
+        }        
 
-        private void input_TextChanged(object sender, EventArgs e)
+        private void TextboxInput_TextChanged(object sender, EventArgs e)
         {
-            //error check
+            //Put tbxInput_TextChanged() Method here
             //if wrong
-                //Show Error
-                //Revert it old data
-                    //oldJobs
+            //Show Error in MessageBox
+            //Revert It using old Data (oldJobs[])
         }
     }
 }
