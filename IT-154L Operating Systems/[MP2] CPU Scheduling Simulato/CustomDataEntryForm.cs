@@ -59,6 +59,7 @@ namespace CPU_Scheduling_Simulator
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
                 TextBox iTxt = new TextBox();
+                iTxt.TextChanged += this.input_TextChanged;
                 iTxt.Location = new Point(150, i * 20);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxCPUCycle[i] = iTxt;
@@ -74,7 +75,8 @@ namespace CPU_Scheduling_Simulator
 
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
-                TextBox iTxt = new TextBox();
+                ComboBox iTxt = new ComboBox();
+                iTxt.Items.AddRange(new string[] { "" }); //Add Type
                 iTxt.Location = new Point(210, i * 20);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxType[i] = iTxt;
@@ -98,6 +100,15 @@ namespace CPU_Scheduling_Simulator
             }
 
             this.Close();
+        }
+
+        private void input_TextChanged(object sender, EventArgs e)
+        {
+            //error check
+            //if wrong
+                //Show Error
+                //Revert it old data
+                    //oldJobs
         }
     }
 }
