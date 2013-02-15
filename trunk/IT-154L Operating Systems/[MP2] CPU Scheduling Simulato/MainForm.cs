@@ -89,7 +89,6 @@ namespace CPU_Scheduling_Simulator
                 {
                     itemString = new string[]{iProcess.TurnaroundTime.ToString(), iProcess.WaitingTime.ToString()
                                             , iProcess.ResponseTime.ToString()};
-
                 }
                 else
                 {
