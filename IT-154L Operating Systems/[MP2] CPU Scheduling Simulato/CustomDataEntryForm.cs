@@ -11,6 +11,8 @@ namespace CPU_Scheduling_Simulator
 {
     public partial class CustomDataEntryForm : Form
     {
+        const int LABEL_ROW_MARGIN = 3;
+        const int INPUT_ROW_MARGIN = 24;
 
         Label[] labelJobNumber = new Label[10];
         TextBox[] textboxArrivalTime = new TextBox[10];
@@ -27,7 +29,7 @@ namespace CPU_Scheduling_Simulator
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
                 Label jobLabel = new Label();
-                jobLabel.Location = new Point(5, (i * 20) + 3);
+                jobLabel.Location = new Point(5, (i * INPUT_ROW_MARGIN) + LABEL_ROW_MARGIN);
                 jobLabel.Size = new System.Drawing.Size(80, 13);
                 labelJobNumber[i] = jobLabel;
                 pnCustomData.Controls.Add(jobLabel);
@@ -44,14 +46,10 @@ namespace CPU_Scheduling_Simulator
             {
                 TextBox iTxt = new TextBox();
                 iTxt.TextChanged += TextboxInput_TextChanged;
-                iTxt.Location = new Point(90, i * 20);
+                iTxt.Location = new Point(90, i * INPUT_ROW_MARGIN);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxArrivalTime[i] = iTxt;
                 pnCustomData.Controls.Add(iTxt);
-            }
-
-            for (int i = 0; i < labelJobNumber.Length; i++)
-            {
                 textboxArrivalTime[i].Text = oldJobs[i].ArrivalTime.ToString();
             }
 
@@ -62,14 +60,10 @@ namespace CPU_Scheduling_Simulator
                 TextBox iTxt = new TextBox();
                 //add set the [Input_TechChanged] to be [iTxt] TextChanged Event
                 iTxt.TextChanged += this.TextboxInput_TextChanged;
-                iTxt.Location = new Point(150, i * 20);
+                iTxt.Location = new Point(150, i * INPUT_ROW_MARGIN);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxCPUCycle[i] = iTxt;
                 pnCustomData.Controls.Add(iTxt);
-            }
-
-            for (int i = 0; i < labelJobNumber.Length; i++)
-            {
                 textboxCPUCycle[i].Text = oldJobs[i].InitialCPUCycle.ToString();
             }
 
@@ -80,14 +74,10 @@ namespace CPU_Scheduling_Simulator
                 ComboBox iTxt = new ComboBox();
                 iTxt.Items.AddRange(new string[] { "N", "PR", "NPR" }); //Add Type
                 iTxt.DropDownStyle = ComboBoxStyle.DropDownList;
-                iTxt.Location = new Point(210, i * 20);
+                iTxt.Location = new Point(210, i * INPUT_ROW_MARGIN);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxType[i] = iTxt;
                 pnCustomData.Controls.Add(iTxt);
-            }
-
-            for (int i = 0; i < labelJobNumber.Length; i++)
-            {
                 textboxType[i].Text = jobs[i].Type.ToString();
             }
         }

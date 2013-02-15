@@ -21,11 +21,9 @@ namespace CPU_Scheduling_Simulator
 
         private int timeFinished;
         private int timeStarted;
-        private int timeReady;
         private int currentCPUCycle;
         private ProcessStatus status;
         private bool alreadyStarted;
-        private bool alreadyInside;
         public int TimeElapsed { get; set; }
         public int JobNumber { get; set; }
         public int ArrivalTime { get; set; }
@@ -39,21 +37,8 @@ namespace CPU_Scheduling_Simulator
             {
                 status = value;
 
-                if (status.Equals(ProcessStatus.Ready) && !alreadyInside)
-                {
-                    alreadyInside = true;
-                    timeReady = TimeElapsed;
-                }
-
                 if (status.Equals(ProcessStatus.Running) && !alreadyStarted)
-                {
-                    
-                    if(!alreadyInside)
-                    {
-                        alreadyInside = true;
-                        timeReady = TimeElapsed;
-                    }
-                    
+                {                    
                     alreadyStarted = true;
                     timeStarted = TimeElapsed;
                 }
@@ -86,7 +71,7 @@ namespace CPU_Scheduling_Simulator
         {
             get
             {
-                return timeReady - this.ArrivalTime;
+                return timeStarted - this.ArrivalTime;
             }
         }
 
@@ -100,7 +85,6 @@ namespace CPU_Scheduling_Simulator
         public Process(int jobNumber, int arrivalTime, int CPUCycle, ProcessType type)
         {
             alreadyStarted = false;
-            alreadyInside = false;
             timeStarted = 0;
             timeFinished = 0;
             this.currentCPUCycle = CPUCycle;
@@ -116,7 +100,6 @@ namespace CPU_Scheduling_Simulator
             this.currentCPUCycle = this.InitialCPUCycle;
             this.Status = ProcessStatus.Hold;
             alreadyStarted = false;
-            alreadyInside = false;
             timeFinished = 0;
             timeStarted = 0;
         }

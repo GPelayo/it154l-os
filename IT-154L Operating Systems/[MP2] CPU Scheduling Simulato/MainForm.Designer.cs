@@ -28,54 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnData = new System.Windows.Forms.Panel();
-            this.lbTimeQuantum = new System.Windows.Forms.Label();
-            this.tBoxTimeQuantum = new System.Windows.Forms.TextBox();
+            this.pnlData = new System.Windows.Forms.Panel();
             this.lvData = new System.Windows.Forms.ListView();
             this.cJobNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cArrivalTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cCPUCycle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pnTimes = new System.Windows.Forms.Panel();
+            this.lbTimeQuantum = new System.Windows.Forms.Label();
+            this.tbxTimeQuantum = new System.Windows.Forms.TextBox();
+            this.pnlTimes = new System.Windows.Forms.Panel();
             this.lvTimes = new System.Windows.Forms.ListView();
             this.cTurnTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cWaitingTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cResponseTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btCustomData = new System.Windows.Forms.Button();
-            this.btNext = new System.Windows.Forms.Button();
-            this.pnTimeline = new System.Windows.Forms.Panel();
-            this.lbCurrentTime = new System.Windows.Forms.Label();
-            this.pnData.SuspendLayout();
-            this.pnTimes.SuspendLayout();
+            this.btnEditData = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.lblCurrentTime = new System.Windows.Forms.Label();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.pnlTimeline = new System.Windows.Forms.Panel();
+            this.tBxTimeline = new System.Windows.Forms.Label();
+            this.btnShowResults = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.pnlData.SuspendLayout();
+            this.pnlTimes.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnData
+            // pnlData
             // 
-            this.pnData.Controls.Add(this.lbTimeQuantum);
-            this.pnData.Controls.Add(this.tBoxTimeQuantum);
-            this.pnData.Controls.Add(this.lvData);
-            this.pnData.Location = new System.Drawing.Point(12, 28);
-            this.pnData.Name = "pnData";
-            this.pnData.Size = new System.Drawing.Size(303, 297);
-            this.pnData.TabIndex = 0;
-            // 
-            // lbTimeQuantum
-            // 
-            this.lbTimeQuantum.AutoSize = true;
-            this.lbTimeQuantum.Location = new System.Drawing.Point(53, 271);
-            this.lbTimeQuantum.Name = "lbTimeQuantum";
-            this.lbTimeQuantum.Size = new System.Drawing.Size(79, 13);
-            this.lbTimeQuantum.TabIndex = 2;
-            this.lbTimeQuantum.Text = "Time Quantum:";
-            // 
-            // tBoxTimeQuantum
-            // 
-            this.tBoxTimeQuantum.Location = new System.Drawing.Point(138, 268);
-            this.tBoxTimeQuantum.Name = "tBoxTimeQuantum";
-            this.tBoxTimeQuantum.Size = new System.Drawing.Size(100, 20);
-            this.tBoxTimeQuantum.TabIndex = 1;
-            this.tBoxTimeQuantum.Text = "4";
-            this.tBoxTimeQuantum.TextChanged += new System.EventHandler(this.tBoxTimeQuantum_TextChanged);
+            this.pnlData.Controls.Add(this.lvData);
+            this.pnlData.Enabled = false;
+            this.pnlData.Location = new System.Drawing.Point(12, 28);
+            this.pnlData.Name = "pnlData";
+            this.pnlData.Size = new System.Drawing.Size(303, 269);
+            this.pnlData.TabIndex = 0;
             // 
             // lvData
             // 
@@ -111,13 +96,31 @@
             this.cType.Text = "Type";
             this.cType.Width = 50;
             // 
-            // pnTimes
+            // lbTimeQuantum
             // 
-            this.pnTimes.Controls.Add(this.lvTimes);
-            this.pnTimes.Location = new System.Drawing.Point(321, 28);
-            this.pnTimes.Name = "pnTimes";
-            this.pnTimes.Size = new System.Drawing.Size(281, 297);
-            this.pnTimes.TabIndex = 1;
+            this.lbTimeQuantum.AutoSize = true;
+            this.lbTimeQuantum.Location = new System.Drawing.Point(79, 308);
+            this.lbTimeQuantum.Name = "lbTimeQuantum";
+            this.lbTimeQuantum.Size = new System.Drawing.Size(79, 13);
+            this.lbTimeQuantum.TabIndex = 2;
+            this.lbTimeQuantum.Text = "Time Quantum:";
+            // 
+            // tbxTimeQuantum
+            // 
+            this.tbxTimeQuantum.Location = new System.Drawing.Point(163, 305);
+            this.tbxTimeQuantum.Name = "tbxTimeQuantum";
+            this.tbxTimeQuantum.Size = new System.Drawing.Size(100, 20);
+            this.tbxTimeQuantum.TabIndex = 1;
+            this.tbxTimeQuantum.Text = "4";
+            // 
+            // pnlTimes
+            // 
+            this.pnlTimes.Controls.Add(this.lvTimes);
+            this.pnlTimes.Enabled = false;
+            this.pnlTimes.Location = new System.Drawing.Point(321, 28);
+            this.pnlTimes.Name = "pnlTimes";
+            this.pnlTimes.Size = new System.Drawing.Size(281, 269);
+            this.pnlTimes.TabIndex = 1;
             // 
             // lvTimes
             // 
@@ -147,58 +150,106 @@
             this.cResponseTime.Text = "Response Time";
             this.cResponseTime.Width = 90;
             // 
-            // btCustomData
+            // btnEditData
             // 
-            this.btCustomData.Location = new System.Drawing.Point(114, 336);
-            this.btCustomData.Name = "btCustomData";
-            this.btCustomData.Size = new System.Drawing.Size(98, 23);
-            this.btCustomData.TabIndex = 2;
-            this.btCustomData.Text = "Custom Data";
-            this.btCustomData.UseVisualStyleBackColor = true;
-            this.btCustomData.Click += new System.EventHandler(this.btCustomData_Click);
+            this.btnEditData.Location = new System.Drawing.Point(92, 331);
+            this.btnEditData.Name = "btnEditData";
+            this.btnEditData.Size = new System.Drawing.Size(75, 23);
+            this.btnEditData.TabIndex = 2;
+            this.btnEditData.Text = "Edit Data";
+            this.btnEditData.UseVisualStyleBackColor = true;
+            this.btnEditData.Click += new System.EventHandler(this.btnCustomData_Click);
             // 
-            // btNext
+            // btnNext
             // 
-            this.btNext.Location = new System.Drawing.Point(412, 337);
-            this.btNext.Name = "btNext";
-            this.btNext.Size = new System.Drawing.Size(98, 23);
-            this.btNext.TabIndex = 3;
-            this.btNext.Text = "Next";
-            this.btNext.UseVisualStyleBackColor = true;
-            this.btNext.Click += new System.EventHandler(this.btNext_Click);
+            this.btnNext.Enabled = false;
+            this.btnNext.Location = new System.Drawing.Point(525, 331);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(74, 23);
+            this.btnNext.TabIndex = 3;
+            this.btnNext.Text = "Next Cycle";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // pnTimeline
+            // lblCurrentTime
             // 
-            this.pnTimeline.Location = new System.Drawing.Point(12, 371);
-            this.pnTimeline.Name = "pnTimeline";
-            this.pnTimeline.Size = new System.Drawing.Size(587, 48);
-            this.pnTimeline.TabIndex = 4;
+            this.lblCurrentTime.AutoSize = true;
+            this.lblCurrentTime.Location = new System.Drawing.Point(321, 9);
+            this.lblCurrentTime.Name = "lblCurrentTime";
+            this.lblCurrentTime.Size = new System.Drawing.Size(73, 13);
+            this.lblCurrentTime.TabIndex = 5;
+            this.lblCurrentTime.Text = "Current Time: ";
             // 
-            // lbCurrentTime
+            // btnStart
             // 
-            this.lbCurrentTime.AutoSize = true;
-            this.lbCurrentTime.Location = new System.Drawing.Point(321, 9);
-            this.lbCurrentTime.Name = "lbCurrentTime";
-            this.lbCurrentTime.Size = new System.Drawing.Size(73, 13);
-            this.lbCurrentTime.TabIndex = 5;
-            this.lbCurrentTime.Text = "Current Time: ";
+            this.btnStart.Location = new System.Drawing.Point(324, 331);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(74, 23);
+            this.btnStart.TabIndex = 6;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // pnlTimeline
+            // 
+            this.pnlTimeline.AutoScroll = true;
+            this.pnlTimeline.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlTimeline.Location = new System.Drawing.Point(12, 378);
+            this.pnlTimeline.Name = "pnlTimeline";
+            this.pnlTimeline.Size = new System.Drawing.Size(587, 78);
+            this.pnlTimeline.TabIndex = 4;
+            // 
+            // tBxTimeline
+            // 
+            this.tBxTimeline.AutoSize = true;
+            this.tBxTimeline.Location = new System.Drawing.Point(15, 360);
+            this.tBxTimeline.Name = "tBxTimeline";
+            this.tBxTimeline.Size = new System.Drawing.Size(46, 13);
+            this.tBxTimeline.TabIndex = 7;
+            this.tBxTimeline.Text = "Timeline";
+            // 
+            // btnShowResults
+            // 
+            this.btnShowResults.Location = new System.Drawing.Point(173, 331);
+            this.btnShowResults.Name = "btnShowResults";
+            this.btnShowResults.Size = new System.Drawing.Size(85, 23);
+            this.btnShowResults.TabIndex = 8;
+            this.btnShowResults.Text = "Show Results";
+            this.btnShowResults.UseVisualStyleBackColor = true;
+            this.btnShowResults.Click += new System.EventHandler(this.btnResults_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Enabled = false;
+            this.btnStop.Location = new System.Drawing.Point(404, 331);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 9;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(613, 468);
-            this.Controls.Add(this.lbCurrentTime);
-            this.Controls.Add(this.pnTimeline);
-            this.Controls.Add(this.btNext);
-            this.Controls.Add(this.btCustomData);
-            this.Controls.Add(this.pnTimes);
-            this.Controls.Add(this.pnData);
+            this.Controls.Add(this.lbTimeQuantum);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.tbxTimeQuantum);
+            this.Controls.Add(this.btnShowResults);
+            this.Controls.Add(this.tBxTimeline);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.lblCurrentTime);
+            this.Controls.Add(this.pnlTimeline);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnEditData);
+            this.Controls.Add(this.pnlTimes);
+            this.Controls.Add(this.pnlData);
             this.Name = "MainForm";
             this.Text = "MP2";
-            this.pnData.ResumeLayout(false);
-            this.pnData.PerformLayout();
-            this.pnTimes.ResumeLayout(false);
+            this.pnlData.ResumeLayout(false);
+            this.pnlTimes.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,23 +257,27 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnData;
+        private System.Windows.Forms.Panel pnlData;
         private System.Windows.Forms.ListView lvData;
         private System.Windows.Forms.ColumnHeader cJobNumber;
         private System.Windows.Forms.ColumnHeader cArrivalTime;
         private System.Windows.Forms.ColumnHeader cCPUCycle;
         private System.Windows.Forms.ColumnHeader cType;
-        private System.Windows.Forms.Panel pnTimes;
+        private System.Windows.Forms.Panel pnlTimes;
         private System.Windows.Forms.ListView lvTimes;
         private System.Windows.Forms.ColumnHeader cTurnTime;
         private System.Windows.Forms.ColumnHeader cWaitingTime;
         private System.Windows.Forms.ColumnHeader cResponseTime;
-        private System.Windows.Forms.Button btCustomData;
-        private System.Windows.Forms.Button btNext;
-        private System.Windows.Forms.Panel pnTimeline;
-        private System.Windows.Forms.Label lbCurrentTime;
+        private System.Windows.Forms.Button btnEditData;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Label lblCurrentTime;
         private System.Windows.Forms.Label lbTimeQuantum;
-        private System.Windows.Forms.TextBox tBoxTimeQuantum;
+        private System.Windows.Forms.TextBox tbxTimeQuantum;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Panel pnlTimeline;
+        private System.Windows.Forms.Label tBxTimeline;
+        private System.Windows.Forms.Button btnShowResults;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 
