@@ -45,7 +45,6 @@ namespace CPU_Scheduling_Simulator
             for (int i = 0; i < labelJobNumber.Length; i++)
             {
                 TextBox iTxt = new TextBox();
-                iTxt.TextChanged += TextboxInput_TextChanged;
                 iTxt.Location = new Point(90, i * INPUT_ROW_MARGIN);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxArrivalTime[i] = iTxt;
@@ -59,7 +58,6 @@ namespace CPU_Scheduling_Simulator
             {
                 TextBox iTxt = new TextBox();
                 //add set the [Input_TechChanged] to be [iTxt] TextChanged Event
-                iTxt.TextChanged += this.TextboxInput_TextChanged;
                 iTxt.Location = new Point(150, i * INPUT_ROW_MARGIN);
                 iTxt.Size = new System.Drawing.Size(55, 13);
                 textboxCPUCycle[i] = iTxt;
@@ -84,22 +82,36 @@ namespace CPU_Scheduling_Simulator
 
         private void btSubmit_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < oldJobs.Count; i++ )
+            try
             {
-                oldJobs[i].ArrivalTime = int.Parse(textboxArrivalTime[i].Text);
-                oldJobs[i].InitialCPUCycle = int.Parse(textboxCPUCycle[i].Text);
-                oldJobs[i].Type = (ProcessType)Enum.Parse(typeof(ProcessType), textboxType[i].Text);
+                for (int i = 0; i < oldJobs.Count; i++)
+                {
+                    int newArrivalTime = 0, newCpuCycle = 0;
+                    newArrivalTime = int.Parse(textboxArrivalTime[i].Text);
+                    newCpuCycle = int.Parse(textboxCPUCycle[i].Text);
+
+                    if (newArrivalTime >= 0 && newCpuCycle > 0)
+                    {
+                        oldJobs[i].ArrivalTime = newArrivalTime;
+                        oldJobs[i].InitialCPUCycle = newCpuCycle;
+                        oldJobs[i].Type = (ProcessType)Enum.Parse(typeof(ProcessType), textboxType[i].Text);
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+
+
+                this.Close();
             }
-
-            this.Close();
-        }        
-
-        private void TextboxInput_TextChanged(object sender, EventArgs e)
-        {
-            //Put tbxInput_TextChanged() Method here
-            //if wrong
-            //Show Error in MessageBox
-            //Revert It using old Data (oldJobs[])
+            catch(Exception)
+            {
+                MessageBox.Show("All text inputs need to be an integer greater than 0.", "Invalid Input", MessageBoxButtons.OK
+                    , MessageBoxIcon.Error);
+            }
+            
+            
         }
     }
 }

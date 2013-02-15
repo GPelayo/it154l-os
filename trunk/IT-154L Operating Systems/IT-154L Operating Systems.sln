@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[MP2] CPU Scheduling Simula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "[MP1-GUI] MainMemorySimulator", "[MP1-GUI] Main Memory GUI\[MP1-GUI] MainMemorySimulator.csproj", "{B1D8AC4B-8D76-4C35-A207-C3937ED93326}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MP3 Test", "Bare\MP3 Test.csproj", "{1DC99181-6926-4BE6-8B1E-0D846A123980}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -29,6 +31,10 @@ Global
 		{B1D8AC4B-8D76-4C35-A207-C3937ED93326}.Debug|x86.Build.0 = Debug|x86
 		{B1D8AC4B-8D76-4C35-A207-C3937ED93326}.Release|x86.ActiveCfg = Release|x86
 		{B1D8AC4B-8D76-4C35-A207-C3937ED93326}.Release|x86.Build.0 = Release|x86
+		{1DC99181-6926-4BE6-8B1E-0D846A123980}.Debug|x86.ActiveCfg = Debug|x86
+		{1DC99181-6926-4BE6-8B1E-0D846A123980}.Debug|x86.Build.0 = Debug|x86
+		{1DC99181-6926-4BE6-8B1E-0D846A123980}.Release|x86.ActiveCfg = Release|x86
+		{1DC99181-6926-4BE6-8B1E-0D846A123980}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
