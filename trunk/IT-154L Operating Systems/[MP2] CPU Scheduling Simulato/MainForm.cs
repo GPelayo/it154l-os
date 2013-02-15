@@ -11,24 +11,21 @@ namespace CPU_Scheduling_Simulator
 {
     public partial class MainForm : Form
     {
-        private List<Process> jobs;
         private List<Panel> timelinePanels;
+        private List<Process> jobs;
         private CPU currentCPU;
-        private int lastJobNumber = -1;
-        private int timelineXPos = 0;
-        private int timelineYPos = 0;
+
+        private int lastJobNumber;
+        private int timelineXPos;
+        private int timelineYPos;
+
+        private double avgTurnaroundTime = 0;
+        private double avgWaitingTime = 0;
+        private double avgResponseTime = 0;
 
         public MainForm()
-        {
-            InitializeComponent();
-            InitializeCPU(4);
-            InitializeTable();
-        }
-
-        private void InitializeCPU(int timeQuantum)
-        {
+        {            
             jobs = new List<Process>();
-            timelinePanels = new List<Panel>();
             jobs.Add(new Process(1, 0, 6, ProcessType.N));
             jobs.Add(new Process(2, 3, 2, ProcessType.NPR));
             jobs.Add(new Process(3, 5, 1, ProcessType.PR));
@@ -39,14 +36,21 @@ namespace CPU_Scheduling_Simulator
             jobs.Add(new Process(8, 16, 5, ProcessType.PR));
             jobs.Add(new Process(9, 17, 7, ProcessType.PR));
             jobs.Add(new Process(10, 19, 2, ProcessType.N));
-            currentCPU = new CPU(jobs, timeQuantum);
-            currentCPU.RunNextCycle();
-            lbCurrentTime.Text = "Current Time: " + currentCPU.CurrentCycle.ToString();
+
+            InitializeComponent();
+            InitializeCPU(jobs, 4);
+            InitializeTableData();
         }
 
-        private void InitializeTable()
-        {          
+        private void InitializeCPU(List<Process> jobsQueue, int timeQuantum)
+        {
+            timelinePanels = new List<Panel>();
+            currentCPU = new CPU(jobsQueue, timeQuantum);
+            lblCurrentTime.Text = "Current Time: " + currentCPU.CurrentCycle.ToString();
+        }
 
+        private void InitializeTableData()
+        { 
             lvData.Items.Clear();
             lvTimes.Items.Clear();
 
@@ -83,12 +87,13 @@ namespace CPU_Scheduling_Simulator
                 
                 if(iProcess.Status.Equals(ProcessStatus.Finished))
                 {
-                    itemString = new String[]{iProcess.TurnaroundTime.ToString(), iProcess.WaitingTime.ToString()
+                    itemString = new string[]{iProcess.TurnaroundTime.ToString(), iProcess.WaitingTime.ToString()
                                             , iProcess.ResponseTime.ToString()};
+
                 }
                 else
                 {
-                    itemString = new String[]{"0", "0", "0"};
+                    itemString = new string[]{"0", "0", "0"};
                 }
 
                 lvTimes.Items.Add(new ListViewItem(itemString));
@@ -119,25 +124,19 @@ namespace CPU_Scheduling_Simulator
         {
             currentCPU.Reset();
             timelinePanels.Clear();
-
-            InitializeTable();
+            InitializeTableData();
         }
 
-        private void btCustomData_Click(object sender, EventArgs e)
+        private void btnCustomData_Click(object sender, EventArgs e)
         {
             CustomDataEntryForm customData = new CustomDataEntryForm(jobs);
             customData.ShowDialog();
-<<<<<<< .mine
-            this.Reset();   
-=======
-            this.Reset();            
->>>>>>> .r11
         }
 
-        private void btNext_Click(object sender, EventArgs e)
+        private void btnNext_Click(object sender, EventArgs e)
         {
-            lbCurrentTime.Text = "Current Time: " + (currentCPU.CurrentCycle + 1).ToString();
             currentCPU.RunNextCycle();
+            lblCurrentTime.Text = "Current Time: " + currentCPU.CurrentCycle.ToString();
 
             Panel iPanel = new Panel();
             Label iLabel = new Label();
@@ -145,36 +144,103 @@ namespace CPU_Scheduling_Simulator
             iLabel.Text = currentCPU.RunningProcess.JobNumber.ToString();
             iLabel.Location = new Point(0, 0);
             iPanel.Size = new Size(19, 15);
-            iPanel.Location = new Point(20 * timelineXPos, 25*timelineYPos);
+            iPanel.Location = new Point(20 * timelineXPos, 16*timelineYPos);
             iPanel.Controls.Add(iLabel);
             iPanel.BackColor = Color.White;
 
-            this.pnTimeline.Controls.Add(iPanel);
+            this.pnlTimeline.Controls.Add(iPanel);
             this.timelineXPos++;
 
-            if (timelineXPos * 24 > this.pnTimeline.Size.Width)
+            if (timelineXPos * 21 > this.pnlTimeline.Size.Width)
             {
                 this.timelineXPos = 0;
                 this.timelineYPos++;
             }
 
-            this.InitializeTable();
+            this.InitializeTableData();
             this.lastJobNumber = currentCPU.RunningProcess.JobNumber;
 
             if (currentCPU.IsFinished)
             {
-                this.btNext.Enabled = false;
-                MessageBox.Show("Avg. Response Time:\t" + currentCPU.AvgRT + "\nAvg. TA Time:\t" 
-                            + currentCPU.AvgTA + "\nAvg. Waiting Time:\t" + currentCPU.AvgWT
-                            , "Simulation Finished!", MessageBoxButtons.OK, MessageBoxIcon.Information  );
+                this.avgResponseTime = currentCPU.AvgRT;
+                this.avgTurnaroundTime = currentCPU.AvgTA;
+                this.avgWaitingTime = currentCPU.AvgWT;
+
+                this.btnNext.Enabled = false;
+                MessageBox.Show("Avg. Response Time:\t" + this.avgResponseTime + "\nAvg. TA Time:\t"
+                            + this.avgTurnaroundTime + "\nAvg. Waiting Time:\t" + this.avgWaitingTime
+                            , "Simulation Finished!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.btnNext.Text = "Start";
+                btnStop_Click(null, null);
             }
         }
 
-        private void tBoxTimeQuantum_TextChanged(object sender, EventArgs e)
+        private void btnResults_Click(object sender, EventArgs e)
         {
-            InitializeCPU(Convert.ToInt32(tBoxTimeQuantum.Text));
+            MessageBox.Show("Avg. Response Time:\t" + this.avgResponseTime + "\nAvg. TA Time:\t"
+                            + this.avgTurnaroundTime + "\nAvg. Waiting Time:\t" + this.avgWaitingTime
+                            , "Last Simulation Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            bool hasValidTimeQuantum = true;
+            int newTimeQuantum = 4;
+            try
+            {
+                newTimeQuantum = Convert.ToInt32(tbxTimeQuantum.Text);
+              
+                if (newTimeQuantum <= 0)
+                {
+                    MessageBox.Show("Time Quantum needs to be an integer greater than 0.", "Invalid Input", MessageBoxButtons.OK
+                            , MessageBoxIcon.Error);
+                    hasValidTimeQuantum = false;
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Time Quantum needs to be an integer greater than 0.", "Invalid Input", MessageBoxButtons.OK
+                    , MessageBoxIcon.Error);
+                hasValidTimeQuantum = false;
+            }
+
+            if (hasValidTimeQuantum)
+            {
+                this.InitializeTableData();
+                this.btnNext.Enabled = true;
+                
+                this.InitializeCPU(jobs, newTimeQuantum);
+                this.Reset();
+
+                this.lastJobNumber = -1;
+                this.timelineXPos = 0;
+                this.timelineYPos = 0;
+                this.pnlTimeline.Controls.Clear();
+
+                this.pnlData.Enabled = true;
+                this.pnlTimes.Enabled = true;
+                this.btnStop.Enabled = true;
+                this.btnNext.Enabled = true;
+
+                this.btnStart.Enabled = false;
+                this.btnEditData.Enabled = false;
+                this.btnShowResults.Enabled = false;
+                this.tbxTimeQuantum.Enabled = false;
+            }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
             this.Reset();
+            pnlData.Enabled = false;
+            pnlTimes.Enabled = false;
+            btnStop.Enabled = false;
+            btnNext.Enabled = false;
+
+            btnStart.Enabled = true;
+            btnEditData.Enabled = true;
+            btnShowResults.Enabled = true;
+            tbxTimeQuantum.Enabled = true;
         }
     }
 }

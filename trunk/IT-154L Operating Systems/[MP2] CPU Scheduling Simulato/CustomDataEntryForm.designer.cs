@@ -33,20 +33,18 @@
             this.lbArrivalTime = new System.Windows.Forms.Label();
             this.lbType = new System.Windows.Forms.Label();
             this.lbCPUCycle = new System.Windows.Forms.Label();
-            this.pnCustomData.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnCustomData
             // 
-            this.pnCustomData.Controls.Add(this.btSubmit);
             this.pnCustomData.Location = new System.Drawing.Point(12, 25);
             this.pnCustomData.Name = "pnCustomData";
-            this.pnCustomData.Size = new System.Drawing.Size(272, 241);
+            this.pnCustomData.Size = new System.Drawing.Size(272, 238);
             this.pnCustomData.TabIndex = 0;
             // 
             // btSubmit
             // 
-            this.btSubmit.Location = new System.Drawing.Point(100, 213);
+            this.btSubmit.Location = new System.Drawing.Point(113, 269);
             this.btSubmit.Name = "btSubmit";
             this.btSubmit.Size = new System.Drawing.Size(75, 23);
             this.btSubmit.TabIndex = 0;
@@ -85,14 +83,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 271);
+            this.ClientSize = new System.Drawing.Size(297, 301);
+            this.Controls.Add(this.btSubmit);
             this.Controls.Add(this.lbCPUCycle);
             this.Controls.Add(this.lbType);
             this.Controls.Add(this.lbArrivalTime);
             this.Controls.Add(this.pnCustomData);
             this.Name = "CustomDataEntryForm";
             this.Text = "Custom Data Entry";
-            this.pnCustomData.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

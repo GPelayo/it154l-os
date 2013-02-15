@@ -95,7 +95,7 @@ namespace CPU_Scheduling_Simulator
 
         public CPU(List<Process> initialJobs, int timeQuantum)
         {
-            this.currentCycle = -1;
+            this.currentCycle = 0;
             this.TimeQuantum = timeQuantum;
             this.allCPUProcesses = initialJobs;
             this.runningProcess = Process.Empty;
@@ -144,26 +144,15 @@ namespace CPU_Scheduling_Simulator
         }
 
         public void RunNextCycle()
-        {
-            if (!CheckIfFinished())
-            {
-                this.runningProcess.Update(currentCycle);
-                this.currentCycle++;
-                SetNextRunningProcess();
-            }        
-        }
+        {            
+            SetNextRunningProcess();
+            this.runningProcess.Update(currentCycle);
+            this.currentCycle++;
 
-        public bool CheckIfFinished()
-        {
-            foreach (Process iProcess in allCPUProcesses)
+            if (this.IsFinished)
             {
-                if (!iProcess.Status.Equals(ProcessStatus.Finished))
-                {
-                    return false;
-                }
+                this.currentCycle--;
             }
-
-            return true;
         }
 
         private void SetNextRunningProcess()
